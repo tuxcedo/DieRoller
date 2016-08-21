@@ -16,35 +16,47 @@ int main(array<System::String ^> ^args)
 	srand(static_cast<unsigned int>(time(0))); //seed random number generator
 	int randomNumber = rand(); //generate random number
 	int die = (randomNumber % 10) + 1;
-	int guessDie = 0;
-	int guesses = 0;
+	int DieNumber = 0;
+	int PlayerGuesses = 0;
 
 	cout << "Guess the random number: ";
-	cin >> guessDie;
+	cin >> DieNumber;
 		do
 		{
-				if (die > guessDie)
+				if (die > DieNumber)
 					cout << "The number is too low try again ";
-				else if(die < guessDie)
+				else if(die < DieNumber)
 					cout << "the number is to high try again ";
 			
-				cin >> guessDie;
-				guesses++;
+				cin >> DieNumber;
+				PlayerGuesses++;
 
-				if (guesses == 5) 
+				if (PlayerGuesses > 5) 
 				{
 					cout << "You failed you Loser!\n";
 						break;
 				}
 					
 
-		} while (die != guessDie);
+		} while (die != DieNumber);
+
+		int Winnings = 0;
+		if (PlayerGuesses == 1)
+			Winnings = die * 5.5;
+		else if (PlayerGuesses == 2)
+			Winnings = die *4.4;
+		else if (PlayerGuesses == 3)
+			Winnings = die * 3.3;
+		else if (PlayerGuesses == 4)
+			Winnings = die * 2.2;
+		else if (PlayerGuesses == 5)
+			Winnings = die * 1.1;
 		
-		if (die == guessDie)
+		if (die == DieNumber)
 		{
 			cout << "You guessed correctly! The number is " << die << " congradulations!\n";
-			cout << "It took you " << guesses << " tries to find the right answer!\n";
-
+			cout << "It took you " << PlayerGuesses << " tries to get the right answer!\n";
+			cout << "You Won: " << Winnings << " YAY!\n";
 		}
 			
 
