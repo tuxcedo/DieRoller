@@ -5,7 +5,7 @@
 #include "cstdlib"
 #include "ctime"
 #include "vector"
-
+#include "string"
 
 using namespace System;
 using std::cout;
@@ -18,16 +18,31 @@ void PickANumber();
 
 int main(array<System::String ^> ^args)
 {
-	int choice;
+	int ChooseGameType;
+	bool ExitBool = false;
+	string YesNO;
 
-	cout << "Choose game mode 1 or 2 ";
-		cin >> choice;
+	cout << "Pick '1' for Random number or pick '2' for guess the number\n";
+	cout << "Or press 3 to quite\n";
+	do
+	{
+		cout << "Choose game mode 1 or 2 ";
+		cin >> ChooseGameType;
 
-		if (choice == 1) { RandomNumber(); }
-		else if (choice == 2) { PickANumber(); }
+		if (ChooseGameType == 1) { RandomNumber(); }
+		else if (ChooseGameType == 2) { PickANumber(); }
+		else if (ChooseGameType == 3) 
+		{
+			cout << "Are you sure you want to exit Y/N?  ";
+			cin >> YesNO;
+			if (YesNO == "Y" || YesNO == "y")
+				ExitBool = true;
+		}
+
+	} while (ExitBool != true);
 	
-
-
+	cout << "Now Exiting\n";
+	
     return 0;
 }
 
@@ -39,18 +54,18 @@ void RandomNumber()
 	int RandomArray[ArrayLenght];
 
 
-	bool check = false;
+	bool CheckBool = false;
 	int randomNumber = rand() % ArrayLenght; //generate random number
 	for (int i = 0; i < ArrayLenght; i++)
 	{
 
-		check = true;
+		CheckBool = true;
 		do
 		{
-			for (int j = 0; (check) && j < i; j++) {
-				check = (RandomArray[i] != RandomArray[j]);
+			for (int j = 0; (CheckBool) && j < i; j++) {
+				CheckBool = (RandomArray[i] != RandomArray[j]);
 			}
-		} while (check == false);
+		} while (CheckBool == false);
 		cout << RandomArray[i] << endl;
 	}
 
@@ -63,19 +78,19 @@ void PickANumber()
 {
 	srand(static_cast<unsigned int>(time(0)));
 	int randomNumber = rand();
-	double die = (randomNumber % 10) + 1;
+	double RandomDice = (randomNumber % 10) + 1;
 	double DieNumber = 0;
 	double PlayerGuesses = 0;
 	double Winnings = 0;
-	
+	double Total = 0;
 
 	cout << "Guess the random number: ";
 	cin >> DieNumber;
 	do
 	{
-		if (die > DieNumber)
+		if (RandomDice > DieNumber)
 		cout << "The number is too low try again ";
-		else if(die < DieNumber)
+		else if(RandomDice < DieNumber)
 		cout << "the number is to high try again ";
 
 		cin >> DieNumber;
@@ -88,27 +103,27 @@ void PickANumber()
 		}
 
 
-	} while (die != DieNumber);
+	} while (RandomDice != DieNumber);
 
 	
 
 	if (PlayerGuesses == 1)
-	Winnings = die * 5.5;
+	Winnings = RandomDice * 5.5;
 	else if (PlayerGuesses == 2)
-	Winnings = die *4.4;
+	Winnings = RandomDice *4.4;
 	else if (PlayerGuesses == 3)
-	Winnings = die * 3.3;
+	Winnings = RandomDice * 3.3;
 	else if (PlayerGuesses == 4)
-	Winnings = die * 2.2;
+	Winnings = RandomDice * 2.2;
 	else if (PlayerGuesses == 5)
-	Winnings = die * 1.1;
+	Winnings = RandomDice * 1.1;
 
-	if (die == DieNumber)
+	if (RandomDice == DieNumber)
 	{
-		cout << "You guessed correctly! The number is " << die << " congradulations!\n";
+		cout << "You guessed correctly! The number is " << RandomDice << " congradulations!\n";
 		cout << "It took you " << PlayerGuesses << " tries to get the right answer!\n";
-		cout << "You Won: " << Winnings << " YAY!\n";
+		cout << "You Won: " << Winnings << " points YAY!\n";
 	}
 
-	//return die, PlayerGuesses, Winnings;
+	
 }
