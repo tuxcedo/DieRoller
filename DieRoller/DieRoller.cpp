@@ -16,7 +16,7 @@ string UserAnswer;
 
 
 void RandomNumber();
-void PickANumber();
+void Pick_A_Number();
 
 int main(array<System::String ^> ^args)
 {
@@ -34,7 +34,7 @@ int main(array<System::String ^> ^args)
 		cin >> ChooseGameType;
 
 		if (ChooseGameType == 1) { RandomNumber(); }
-		else if (ChooseGameType == 2) { PickANumber(); }
+		else if (ChooseGameType == 2) { Pick_A_Number(); }
 		else if (ChooseGameType == 3)
 		{
 			cout << "Are you sure you want to exit Y/N?\n";
@@ -57,27 +57,26 @@ int randrange(int low, int high)   /* generates a random number within given ran
 
 void RandomNumber()
 {
-	
+	int NoRepeatNumbers;
 	do
 	{
-		bool CheckBool = false;
-		const int ArrayLenght = 5;
+		
 		srand(static_cast<unsigned int>(time(0))); //seed random number generator
-		int RandomArray[ArrayLenght];
+		int RandomArray[5];
 	
 
-		for (int i = 0; i < ArrayLenght; i++)
+		for (int i = 0; i < 5; i++)
 		{
 
-			CheckBool = true;
-			do
+			
+			do //make sure that numbers do not repeat
 			{
 				RandomArray[i] = randrange(1, 88);
 
-				for (int j = 0; (CheckBool) && j < i; j++) {
-					CheckBool = (RandomArray[i] != RandomArray[j] );
-				}
-			} while (CheckBool == false);
+				for (int j = 0;  j < i; j++) 
+					NoRepeatNumbers = (RandomArray[i] != RandomArray[j] );
+				
+			} while (NoRepeatNumbers != NoRepeatNumbers);
 			cout << RandomArray[i] << endl;
 
 		}
@@ -94,10 +93,10 @@ void RandomNumber()
 }
 
 
-void PickANumber()
+void Pick_A_Number()
 {
 	double Total = 0;
-	cout << "Guess a number in under 5 or less attempts\n";
+	cout << "Guess a number in 5 or less attempts, ranging from '1-10'\n";
 	
 	do
 	{
