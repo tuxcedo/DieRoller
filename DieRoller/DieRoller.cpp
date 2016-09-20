@@ -4,7 +4,6 @@
 #include "iostream"
 #include "cstdlib"
 #include "ctime"
-#include "vector"
 #include "string"
 
 using namespace System;
@@ -13,38 +12,41 @@ using std::cin;
 using std::endl;
 using std::string;
 
+string UserAnswer;
+
+
 void RandomNumber();
 void PickANumber();
 
 int main(array<System::String ^> ^args)
 {
 	bool ExitBool = false;
-
-
-	cout << "Pick '1' for Random number or pick '2' for guess the number\n";
+	
+	cout << "Pick a Game\n";
+	cout << "Pick '1' for Random Number Game or pick '2' for Guess The Number Game\n";
 	cout << "Or press 3 to quite\n";
 	do
 	{
+		
 		int ChooseGameType;
-		string YesNO;
-
+	
 		cout << "Choose game mode 1 or 2\n";
 		cin >> ChooseGameType;
 
 		if (ChooseGameType == 1) { RandomNumber(); }
 		else if (ChooseGameType == 2) { PickANumber(); }
-		else if (ChooseGameType == 3) 
+		else if (ChooseGameType == 3)
 		{
 			cout << "Are you sure you want to exit Y/N?\n";
-			cin >> YesNO;
-			if (YesNO == "Y" || YesNO == "y")
+			cin >> UserAnswer;
+			if (UserAnswer == "Y" || UserAnswer == "y")
 				ExitBool = true;
 		}
-		
+
 	} while (ExitBool != true);
-	
+
 	cout << "Now Exiting\n";
-	
+
     return 0;
 }
 
@@ -53,17 +55,16 @@ int randrange(int low, int high)   /* generates a random number within given ran
 	return rand() % (low + high) + low + 1;
 }
 
-void RandomNumber() 
+void RandomNumber()
 {
-	bool CheckBool = false;
-	string YesNO;
-	const int ArrayLenght = 5;
+	
 	do
 	{
-
+		bool CheckBool = false;
+		const int ArrayLenght = 5;
 		srand(static_cast<unsigned int>(time(0))); //seed random number generator
 		int RandomArray[ArrayLenght];
-		//int randomNumber = rand() % (1 + 10); //generate random number
+	
 
 		for (int i = 0; i < ArrayLenght; i++)
 		{
@@ -71,31 +72,33 @@ void RandomNumber()
 			CheckBool = true;
 			do
 			{
-				RandomArray[i] = randrange(1, 10);
+				RandomArray[i] = randrange(1, 88);
 
 				for (int j = 0; (CheckBool) && j < i; j++) {
-					CheckBool = (RandomArray[i] != RandomArray[j] && RandomArray[i] != 0);
+					CheckBool = (RandomArray[i] != RandomArray[j] );
 				}
 			} while (CheckBool == false);
 			cout << RandomArray[i] << endl;
-			
+
 		}
 
 		cout << "Run Again Y/N?\n";
-		cin >> YesNO;
-		if (YesNO == "Y" || YesNO == "y")
+		cin >> UserAnswer;
+		
+		if (UserAnswer == "Y" || UserAnswer == "y")
 			continue;
 		else
 			return;
-	} while (CheckBool == false);
+	} while (UserAnswer != "N" || UserAnswer != "n");
 
 }
 
 
 void PickANumber()
 {
+	double Total = 0;
+	cout << "Guess a number in under 5 or less attempts\n";
 	
-	string YesNO;
 	do
 	{
 		srand(static_cast<unsigned int>(time(0)));
@@ -104,8 +107,8 @@ void PickANumber()
 		double DieNumber = 0;
 		double PlayerGuesses = 0;
 		double Winnings = 0;
-		double Total = 0;
 		
+
 
 		cout << "Guess the random number:\n";
 		cin >> DieNumber;
@@ -129,7 +132,6 @@ void PickANumber()
 		} while (RandomDice != DieNumber);
 
 
-
 		if (PlayerGuesses == 1)
 			Winnings = RandomDice * 5.5;
 		else if (PlayerGuesses == 2)
@@ -141,6 +143,7 @@ void PickANumber()
 		else if (PlayerGuesses == 5)
 			Winnings = RandomDice * 1.1;
 
+	
 		if (RandomDice == DieNumber)
 		{
 			cout << "You guessed correctly! The number is " << RandomDice << " congradulations!\n";
@@ -148,15 +151,18 @@ void PickANumber()
 			cout << "You Won: " << Winnings << " points YAY!\n";
 		}
 
-	
-		cout << "Play Again?\n";
-		cin >> YesNO;
-		if (YesNO == "Y" || YesNO == "y")
+		Total = Winnings + Total;
+		cout << "Total Winnings: " << Total << " \n";
+
+		cout << "Play Again Y/N?\n";
+		cin >> UserAnswer;
+		
+		if (UserAnswer == "Y" || UserAnswer == "y")
 			continue;
 		else
 			return;
-
-	} while (YesNO != "N" || YesNO != "n");
 	
+	} while (UserAnswer != "N" || UserAnswer != "n");
 
+	
 }
